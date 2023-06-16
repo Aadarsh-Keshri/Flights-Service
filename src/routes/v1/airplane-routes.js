@@ -11,7 +11,7 @@ router.post('/',
 
 // /api/v1/airplanes GET
 router.get('/',
-                AirplaneController.getAirplanes);
+               AirplaneController.getAirplanes);
 
 // /api/v1/airplanes/:id GET
 router.get('/:id',
@@ -19,7 +19,15 @@ router.get('/:id',
 
 // /api/v1/airplanes/:id DELETE
 router.delete('/:id',
-                  AirplaneController.destroyAirplane);
+                     AirplaneController.destroyAirplane);
+
+// /api/v1/airplanes/:id DELETE
+router.patch('/:id',
+                    AirplaneMiddlewares.validateUpdateRequest,
+                    AirplaneController.updateAirplane);
+                  
+
+
 
 module.exports=router;
 

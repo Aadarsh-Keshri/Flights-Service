@@ -6,9 +6,8 @@ const {ErrorResponse,SuccessResponse}=require('../utils/common');
 
 /**
  * POST:airplanes
- * req-boy:{modelNumber:'airbus320',capacity: 200}
+ * req-body:{modelNumber:'airbus320',capacity: 200}
  */
-
 async function createAirplane(req,res){
     try {
         //console.log(req.body);//express by default cannot read request body
@@ -30,7 +29,7 @@ async function createAirplane(req,res){
 
 /**
  * GET:airplanes
- * req-boy:{}
+ * req-body:{}
  */
 async function getAirplanes(req,res){
     try {
@@ -49,11 +48,11 @@ async function getAirplanes(req,res){
 
 /**
  * GET:airplanes/:id
- * req-boy:{}
+ * req-body:{}
  */
 async function getAirplane(req,res){
     try {
-        const airplanes=await AirplaneService.getAirplane(req.params.id)
+        const airplanes=await AirplaneService.getAirplane(req.params.id);
         SuccessResponse.data=airplanes;
         return res
                   .status(StatusCodes.OK)
@@ -68,11 +67,11 @@ async function getAirplane(req,res){
 
 /**
  * DELETE:airplanes/:id
- * req-boy:{}
+ * req-body:{}
  */
 async function destroyAirplane(req,res){
     try {
-        const airplanes=await AirplaneService.destroyAirplane(req.params.id)
+        const airplanes=await AirplaneService.destroyAirplane(req.params.id);
         SuccessResponse.data=airplanes;
         return res
                   .status(StatusCodes.OK)
@@ -85,9 +84,33 @@ async function destroyAirplane(req,res){
     }
 }
 
+/**
+ * PATCH:airplanes/:id
+ * req-body:{capacity: 200}
+ */
+async function updateAirplane(req,res){
+    try {
+        const airplane=await AirplaneService.updateAirplane(req.params.id,{
+             capacity: req.body.capacity
+        });
+        SuccessResponse.data=airplane;
+        return res
+                  .status(StatusCodes.OK)
+                  .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error=error;
+        return res
+                  .status(error.statusCode) 
+                  .json(ErrorResponse);
+    }
+}
+
+
+
 module.exports={
   createAirplane,
   getAirplanes,
   getAirplane,
-  destroyAirplane
+  destroyAirplane,
+  updateAirplane
 }
