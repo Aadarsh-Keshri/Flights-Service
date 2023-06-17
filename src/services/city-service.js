@@ -21,6 +21,20 @@ async function createCity(data){
     }
 }
 
+async function deleteCity(id){
+    try {
+        const response=await cityRepository.destroy(id);
+        return response;
+    } catch (error) {
+        if(error.statusCode==StatusCodes.NOT_FOUND){
+            throw new AppError('This city you requested to delete is not present',error.statusCode);
+        }
+        throw new AppError('Could not destroy the city',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
 module.exports={
     createCity,
+    deleteCity
 }
