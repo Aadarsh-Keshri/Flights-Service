@@ -21,7 +21,7 @@ router.get('/:id',
 router.delete('/:id',
                      AirplaneController.destroyAirplane);
 
-// /api/v1/airplanes/:id DELETE
+// /api/v1/airplanes/:id UPDATE
 router.patch('/:id',
                     AirplaneMiddlewares.validateUpdateRequest,
                     AirplaneController.updateAirplane);
