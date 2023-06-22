@@ -2,15 +2,18 @@ const { FlightRepository }=require('../repositories');
 const AppError=require('../utils/errors/app-error');
 const {StatusCodes}=require('http-status-codes');
 const {Op}=require('sequelize');
+const {compareTime}=require('../utils/helpers/datetime-helpers');
 
 const flightRepository=new FlightRepository();
 
 async function createFlight(data){
+    if(compareTime(data.departureTime,data.arrivalTime)){
+        throw new AppError('Departure time should be less than Arrival time',StatusCodes.BAD_REQUEST)
+    }
     try {
         const flight=await flightRepository.create(data);
         return flight;
     } catch (error) {
-        console.log(error);
         if(error.name=='SequelizeValidationError'){
             let explanation=[];
             error.errors.forEach((err) => {
@@ -32,6 +35,9 @@ async function getAllFlights(query){
         customFilter.departureAirportId=departureAirportId;
         customFilter.arrivalAirportId=arrivalAirportId;
         //TODO: add a check that they cannot be same
+        if(departureAirportId==arrivalAirportId){
+            throw new AppError('Departure and Arrival airports cannot be same',StatusCodes.BAD_REQUEST);
+        }
     }
     if(query.price){
         [minPrice,maxPrice]=query.price.split("-");
