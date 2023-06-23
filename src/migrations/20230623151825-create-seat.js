@@ -13,14 +13,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      row: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      col: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       airplaneId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -29,6 +21,14 @@ module.exports = {
           key: 'id'
         },
         onDelete: 'cascade'
+      },
+      row: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      col: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       type: {
         type: Sequelize.ENUM,

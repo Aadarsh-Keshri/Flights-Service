@@ -21,16 +21,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Seat.init({
+    airplaneId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     row: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     col: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    airplaneId: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     type: {
