@@ -58,6 +58,10 @@ async function getAllFlights(req,res){
     }
 }
 
+/**
+ * GET:flights/:id/seats
+ * req-body:{flightId: 1,seats: 5,dec: 0}
+ */
 async function updateSeats(req,res){
     try {
         const response=await FlightService.updateSeats({
